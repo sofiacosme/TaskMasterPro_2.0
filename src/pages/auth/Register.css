@@ -1,0 +1,14 @@
+/* src/pages/auth/Register.css */
+.reg__avatar {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.reg__avatar-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+}

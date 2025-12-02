@@ -1,59 +1,75 @@
-/* src/components/Menu.css */
 
-/* 1) Fondo del IonMenu y colores base */
-.left-menu {
-  /* color de tu panel izquierdo (puedes poner #1E40AF si prefieres el secondary) */
+ion-menu.left-menu {
   --background: #2F3A59;
-  --ion-background-color: #2F3A59; /* para entornos que lean este token */
-  --color: #ffffff;                 /* color de texto por defecto */
+  --ion-background-color: #2F3A59;
+  --color: #ffffff;
   --ion-text-color: #ffffff;
 }
 
-/* 2) Toolbar del menú (título) */
-.left-menu .left-menu__toolbar {
-  background: var(--background);
-  color: var(--color);
-}
 
-/* Forzamos el color del título por si el tema lo sobreescribe */
-.left-menu .left-menu__toolbar ion-title,
-.left-menu .left-menu__toolbar .toolbar-title {
+ion-menu.left-menu::part(container) {
+  background: #2F3A59 !important;
   color: #ffffff !important;
 }
 
-/* 3) Contenido del menú (fondo + color de texto) */
+
+.left-menu ion-toolbar {
+  --background: #2F3A59 !important;
+  --color: #ffffff !important;
+  background: #2F3A59 !important;
+  color: #ffffff !important;
+}
+
+/* Título del menú */
+.left-menu ion-toolbar ion-title,
+.left-menu ion-toolbar .toolbar-title {
+  color: #ffffff !important;
+}
+
+
 .left-menu .left-menu__content {
-  --background: var(--background);
-  --ion-background-color: var(--background);
-  background: var(--background);
-  color: var(--color) !important;
+  background: #2F3A59 !important;
+  color: #ffffff !important;
+  --background: #2F3A59 !important;
+  --ion-background-color: #2F3A59 !important;
 }
 
-/* 4) Lista e ítems del menú */
-.left-menu .left-menu__list {
-  background: transparent;
+
+.left-menu ion-list {
+  background: transparent !important;
 }
 
-.left-menu .left-menu__item {
-  --background: transparent;
-  --color: #ffffff;
-  --ion-text-color: #ffffff;
+.left-menu ion-item {
+  --background: transparent !important;
+  --color: #ffffff !important;
+  --ion-text-color: #ffffff !important;
   --padding-start: 12px;
   --inner-padding-end: 12px;
   font-size: 14px;
 }
 
-/* Asegura que el label sea blanco en cualquier modo/plataforma */
-.left-menu .left-menu__item ion-label {
+/* Colores del label */
+.left-menu ion-item ion-label {
   color: #ffffff !important;
 }
 
-/* Hover/active: leve aclarado */
-.left-menu .left-menu__item:hover {
+/* Hover */
+.left-menu ion-item:hover {
   filter: brightness(1.1);
 }
 
-/* 5) Footer con botón Salir anclado abajo */
+/* Ícono dentro del item */
+.left-menu ion-item ion-icon {
+  color: #ffffff !important;
+}
+
+/* Ítem seleccionado (active) */
+.left-menu ion-item.activated,
+.left-menu ion-item.ion-activated {
+  --background: rgba(255, 255, 255, 0.12) !important;
+}
+
+
 .left-menu .left-menu__footer {
   position: absolute;
   bottom: 12px;
@@ -61,8 +77,13 @@
   right: 12px;
 }
 
-/* 6) (Opcional) Si estás en iOS y ves que aún no pinta, usa ::part */
-.left-menu ion-toolbar::part(container) {
-  background: var(--background);
-  color: var(--color);
+/* Footer item */
+.left-menu .left-menu__footer ion-item {
+  --background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 8px;
+}
+
+.left-menu .left-menu__footer ion-item ion-label,
+.left-menu .left-menu__footer ion-item ion-icon {
+  color: #ffffff !important;
 }

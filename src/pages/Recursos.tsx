@@ -1,4 +1,4 @@
-// src/pages/Recursos.tsx
+
 import React, { useState } from "react";
 import {
   IonButton,
@@ -13,6 +13,7 @@ import {
   IonToast,
   IonToolbar,
   IonMenuButton,
+  IonSpinner,
 } from "@ionic/react";
 import { useAuth } from "../context/AuthContext";
 import { saveRecurso } from "../services/resources";
@@ -48,9 +49,9 @@ function bloqueaIframe(u: string): boolean {
 
 async function abrirEnNavegador(u: string) {
   try {
-    await Browser.open({ url: u }); // en móvil abre navegador in-app
+    await Browser.open({ url: u });
   } catch {
-    window.open(u, "_blank", "noopener,noreferrer"); // fallback web
+    window.open(u, "_blank", "noopener,noreferrer");
   }
 }
 
@@ -61,6 +62,7 @@ const Recursos: React.FC = () => {
   const [url, setUrl] = useState<string | null>(null);
   const [iframeBlocked, setIframeBlocked] = useState(false);
   const [toast, setToast] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function onGo() {
     const n = normalizeUrl(raw);
@@ -69,8 +71,14 @@ const Recursos: React.FC = () => {
       return;
     }
 
+    if (!/^https:\/\//i.test(n)) {
+      setToast("Solo se permiten URLs HTTPS por seguridad");
+      return;
+    }
+
     setUrl(n);
     setIframeBlocked(bloqueaIframe(n));
+    setLoading(true);
 
     if (!user) {
       setToast("Debes iniciar sesión para guardar el recurso");
@@ -99,7 +107,7 @@ const Recursos: React.FC = () => {
           <IonInput
             placeholder="https://ejemplo.com"
             value={raw}
-            onIonInput={(e) => setRaw(e.detail.value || "")}
+            onIonInput={(e) => setRaw((e.detail.value as string) || "")}
             inputMode="url"
           />
         </IonItem>
@@ -116,7 +124,7 @@ const Recursos: React.FC = () => {
           Ir
         </IonButton>
 
-        {/* Vista: iframe o botón Abrir (si el sitio bloquea iframe) */}
+        {/* Vista: iframe o botón Abrir */}
         {url && iframeBlocked ? (
           <div style={{ marginTop: 12 }}>
             <IonText>
@@ -125,11 +133,26 @@ const Recursos: React.FC = () => {
             <IonButton onClick={() => abrirEnNavegador(url)}>Abrir en navegador</IonButton>
           </div>
         ) : url ? (
-          <div style={{ marginTop: 12, height: "60vh", border: "1px solid #e0e0e0" }}>
+          <div style={{ marginTop: 12, height: "60vh", border: "1px solid #e0e0e0", position: "relative" }}>
+            {loading && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  zIndex: 10,
+                }}
+              >
+                <IonSpinner name="crescent" />
+              </div>
+            )}
             <iframe
+              key={url}
               title="web"
               src={url}
               style={{ width: "100%", height: "100%", border: 0 }}
+              onLoad={() => setLoading(false)}
             />
           </div>
         ) : (

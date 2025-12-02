@@ -11,6 +11,7 @@ import Recursos from "./pages/Recursos";
 import Acciones from "./pages/Acciones";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import Tutorial from "./pages/Tutorial";
 
 setupIonicReact();
 
@@ -32,6 +33,7 @@ const Shell: React.FC = () => {
         <Private exact path="/nueva-tarea" component={NuevaTarea} />
         <Private exact path="/recursos" component={Recursos} />
         <Private exact path="/acciones" component={Acciones} />
+        <Private exact path="/tutorial" component={Tutorial} />
         {/* Dentro del Shell, "/" redirige a /perfil */}
         <Route exact path="/" render={() => <Redirect to="/perfil" />} />
       </IonRouterOutlet>

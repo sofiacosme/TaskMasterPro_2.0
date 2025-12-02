@@ -17,7 +17,13 @@ import type { IonInputCustomEvent } from '@ionic/core';
 import type { InputChangeEventDetail } from '@ionic/core/components';
 
 
-
+/**
+ * Equivalente a tu AccionesFragment (Android):
+ * - 📝 Nueva Tarea  -> navega a /nueva-tarea
+ * - 📤 Exportar     -> copia al portapapeles las tareas del usuario
+ * - 🗑 Limpiar      -> elimina todas las tareas del usuario
+ * - 🔄 Sincronizar  -> mensaje simulado
+ */
 const Acciones: React.FC = () => {
   const { user } = useAuth();
   const nav = useHistory();
